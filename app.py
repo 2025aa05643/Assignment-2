@@ -13,9 +13,6 @@ from sklearn.metrics import (
     classification_report
 )
 
-# ---------------------------
-# Page Configuration
-# ---------------------------
 st.set_page_config(
     page_title="Mobile Price ML Dashboard",
     page_icon="📱",
@@ -39,9 +36,7 @@ uploaded_file = st.file_uploader(
     type=["csv"]
 )
 
-# ---------------------------
-# Main Logic
-# ---------------------------
+
 if uploaded_file is not None:
 
     data = pd.read_csv(uploaded_file)
@@ -63,9 +58,7 @@ if uploaded_file is not None:
         predictions = model.predict(X_scaled)
         probabilities = model.predict_proba(X_scaled)
 
-        # ---------------------------
-        # Metrics Section
-        # ---------------------------
+        
         st.subheader("📊 Model Evaluation Metrics")
 
         col1, col2, col3 = st.columns(3)
@@ -80,15 +73,11 @@ if uploaded_file is not None:
         col5.metric("Recall", f"{recall_score(y, predictions, average='weighted'):.4f}")
         col6.metric("F1 Score", f"{f1_score(y, predictions, average='weighted'):.4f}")
 
-        # ---------------------------
-        # Classification Report
-        # ---------------------------
+        
         st.subheader("📈 Classification Report")
         st.text(classification_report(y, predictions))
 
-        # ---------------------------
-        # Confusion Matrix
-        # ---------------------------
+
         st.subheader("📉 Confusion Matrix")
 
         cm = confusion_matrix(y, predictions)
